@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/dorandoran")
@@ -21,5 +18,10 @@ public class DorandoranController {
     @GetMapping
     public DataResponse getDorandorans(@RequestBody DorandoranRequest dorandoranRequest, @PageableDefault(sort = {"uploadDate"}, direction = Sort.Direction.DESC) Pageable pageable) {
         return DataResponse.of(dorandoranService.getDorandorans(dorandoranRequest, pageable));
+    }
+
+    @GetMapping("/{dorandoran_id}")
+    public DataResponse getDorandoran(@PathVariable("dorandoran_id") Long dorandoranId) {
+        return DataResponse.of(dorandoranService.getDorandoran(dorandoranId));
     }
 }

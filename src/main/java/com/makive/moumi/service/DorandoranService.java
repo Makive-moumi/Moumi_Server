@@ -1,9 +1,11 @@
 package com.makive.moumi.service;
 
+import com.makive.moumi.exception.GeneralException;
 import com.makive.moumi.model.domain.Dorandoran;
 import com.makive.moumi.model.dto.DorandoranDTO;
 import com.makive.moumi.model.dto.request.DorandoranRequest;
 import com.makive.moumi.model.dto.response.DorandoranResponse;
+import com.makive.moumi.model.dto.response.DorandoransResponse;
 import com.makive.moumi.repository.DorandoranRepository;
 import com.makive.moumi.repository.specification.DorandoranSpecifications;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,14 @@ public class DorandoranService {
                 .content(dorandoranDTOList)
                 .first(dorandoranSlice.isFirst())
                 .last(dorandoranSlice.isLast())
+                .build();
+    }
+
+    public DorandoranResponse getDorandoran(Long dorandoranId) {
+        Dorandoran dorandoran = dorandoranRepository.findById(dorandoranId).orElseThrow(GeneralException::new);
+
+        return DorandoranResponse.builder()
+                .dorandoran(DorandoranDTO.fromDorandoran(dorandoran))
                 .build();
     }
 }
