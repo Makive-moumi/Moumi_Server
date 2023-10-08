@@ -11,16 +11,15 @@ import java.util.function.Predicate;
 @Getter
 @RequiredArgsConstructor
 public enum Code {
-    OK(200, HttpStatus.OK, "OK"),
+    OK(200, HttpStatus.OK, "Request successful"),
+    DATA_NOT_FOUND(204, HttpStatus.NO_CONTENT, "Data not found"),
 
     BAD_REQUEST(400, HttpStatus.BAD_REQUEST, "Bad request"),
     VALIDATION_ERROR(400, HttpStatus.BAD_REQUEST, "Validation error"),
-    NOT_FOUND(404, HttpStatus.NOT_FOUND, "Requested resource is not found"),
+    NOT_FOUND(404, HttpStatus.NOT_FOUND, "Resource not found"),
 
-    INTERNAL_ERROR(500, HttpStatus.INTERNAL_SERVER_ERROR, "Internal error"),
-    DATA_ACCESS_ERROR(500, HttpStatus.INTERNAL_SERVER_ERROR, "Data access error"),
-
-    UNAUTHORIZED(401, HttpStatus.UNAUTHORIZED, "User unauthorized");
+    INTERNAL_ERROR(500, HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error"),
+    DATA_ACCESS_ERROR(500, HttpStatus.INTERNAL_SERVER_ERROR, "Data access error");
 
     private final Integer code;
     private final HttpStatus httpStatus;
