@@ -49,10 +49,8 @@ public class TranslationService {
         int maxPrice = translationRequest.getMaxPrice();
         Specification<Translation> spec = TranslationSpecifications.findAllByAllCategoryNamesAndPriceRange(category, minPrice, maxPrice);
 
-        int count = translationRepository.count(spec);
-
         return TranslationsCountResponse.builder()
-                .count(count)
+                .count(translationRepository.count(spec))
                 .build();
     }
 
