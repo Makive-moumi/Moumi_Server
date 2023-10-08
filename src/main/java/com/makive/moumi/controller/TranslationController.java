@@ -18,16 +18,16 @@ public class TranslationController {
 
     @GetMapping()
     public DataResponse getTranslations(@RequestBody TranslationRequest translationRequest, @PageableDefault(sort = {"registerDate"}, direction = DESC) Pageable pageable) {
-        return DataResponse.of(translationService.findTranslationsByRequest(translationRequest, pageable));
+        return DataResponse.of(translationService.getTranslations(translationRequest, pageable));
     }
 
     @GetMapping("/count")
     public DataResponse countTranslations(@RequestBody TranslationRequest translationRequest) {
-        return DataResponse.of(translationService.countTranslationsByRequest(translationRequest));
+        return DataResponse.of(translationService.countTranslations(translationRequest));
     }
 
     @GetMapping("/{translation_id}")
     public DataResponse getTranslation(@PathVariable("translation_id") Long translationId) {
-        return DataResponse.of(translationService.findTranslationById(translationId));
+        return DataResponse.of(translationService.getTranslation(translationId));
     }
 }

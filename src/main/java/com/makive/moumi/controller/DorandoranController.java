@@ -19,7 +19,7 @@ public class DorandoranController {
     private final DorandoranService dorandoranService;
 
     @GetMapping
-    public DataResponse getDorandoran(@RequestBody DorandoranRequest dorandoranRequest, @PageableDefault(sort = {"uploadDate"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        return DataResponse.of(dorandoranService.findDorandoranByCategoryNames(dorandoranRequest, pageable));
+    public DataResponse getDorandorans(@RequestBody DorandoranRequest dorandoranRequest, @PageableDefault(sort = {"uploadDate"}, direction = Sort.Direction.DESC) Pageable pageable) {
+        return DataResponse.of(dorandoranService.getDorandorans(dorandoranRequest, pageable));
     }
 }

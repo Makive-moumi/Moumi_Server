@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class DorandoranService {
     private final DorandoranRepository dorandoranRepository;
 
-    public DorandoranResponse findDorandoranByCategoryNames(DorandoranRequest dorandoranRequest, Pageable pageable) {
+    public DorandoransResponse getDorandorans(DorandoranRequest dorandoranRequest, Pageable pageable) {
         List<String> category = dorandoranRequest.getCategory();
         Specification<Dorandoran> spec = DorandoranSpecifications.findAllByAllCategoryNames(category);
 
@@ -31,7 +31,7 @@ public class DorandoranService {
                 .map(DorandoranDTO::fromDorandoran)
                 .collect(Collectors.toList());
 
-        return DorandoranResponse.builder()
+        return DorandoransResponse.builder()
                 .content(dorandoranDTOList)
                 .first(dorandoranSlice.isFirst())
                 .last(dorandoranSlice.isLast())

@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class TranslationService {
     private final TranslationRepository translationRepository;
 
-    public TranslationsResponse findTranslationsByRequest(TranslationRequest translationRequest, Pageable pageable) {
+    public TranslationsResponse getTranslations(TranslationRequest translationRequest, Pageable pageable) {
         List<String> category = translationRequest.getCategory();
         int minPrice = translationRequest.getMinPrice();
         int maxPrice = translationRequest.getMaxPrice();
@@ -43,7 +43,7 @@ public class TranslationService {
                 .build();
     }
 
-    public TranslationsCountResponse countTranslationsByRequest(TranslationRequest translationRequest) {
+    public TranslationsCountResponse countTranslations(TranslationRequest translationRequest) {
         List<String> category = translationRequest.getCategory();
         int minPrice = translationRequest.getMinPrice();
         int maxPrice = translationRequest.getMaxPrice();
@@ -56,7 +56,7 @@ public class TranslationService {
                 .build();
     }
 
-    public TranslationResponse findTranslationById(Long translationId) {
+    public TranslationResponse getTranslation(Long translationId) {
         Translation translation = translationRepository.findById(translationId).orElse(null);
         assert translation != null;
         TranslationDTO translationDTO = TranslationDTO.fromTranslation(translation);

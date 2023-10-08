@@ -22,6 +22,7 @@ public class ReviewService {
 
     public ReviewResponse getReviews(Long translationId, Pageable pageable) {
         Slice<ReviewDTO> reviews = reviewRepository.findAllByTranslationId(translationId, pageable);
+
         return ReviewResponse.builder()
                 .content(reviews.getContent())
                 .first(reviews.isFirst())

@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DorandoranResponse {
+public class DorandoransResponse {
     private List<DorandoranDTO> content;
     private boolean first;
     private boolean last;
