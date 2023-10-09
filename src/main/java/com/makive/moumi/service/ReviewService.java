@@ -1,5 +1,7 @@
 package com.makive.moumi.service;
 
+import com.makive.moumi.exception.Code;
+import com.makive.moumi.exception.GeneralException;
 import com.makive.moumi.model.domain.Request;
 import com.makive.moumi.model.domain.Review;
 import com.makive.moumi.model.dto.ReviewDTO;
@@ -32,7 +34,8 @@ public class ReviewService {
 
     @Transactional
     public void addReview(Long requestId, ReviewRequest reviewRequest) {
-        Request request = requestRepository.findById(requestId).orElse(null);
+        Request request = requestRepository.findById(requestId)
+                .orElseThrow(() -> new GeneralException(Code.DATA_NOT_FOUND));
 
         Review review = Review.builder()
                 .request(request)

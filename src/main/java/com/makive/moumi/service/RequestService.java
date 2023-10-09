@@ -67,8 +67,8 @@ public class RequestService {
     }
 
     public RequestClientResponse getRequestClient(Long requestId) {
-        Request request = requestRepository.findById(requestId).orElse(null);
-        assert request != null;
+        Request request = requestRepository.findById(requestId)
+                .orElseThrow(() -> new GeneralException(Code.DATA_NOT_FOUND));
         Translation translation = request.getTranslation();
         Review review = request.getReview();
         List<Double> reviewRatings = translation.getRequests().stream()
@@ -86,8 +86,8 @@ public class RequestService {
     }
 
     public RequestTranslatorResponse getRequestTranslator(Long requestId) {
-        Request request = requestRepository.findById(requestId).orElse(null);
-        assert request != null;
+        Request request = requestRepository.findById(requestId)
+                .orElseThrow(() -> new GeneralException(Code.DATA_NOT_FOUND));
         int count = request.getRequestPdfs().size();
         int price = request.getTranslation().getPrice();
 
@@ -101,8 +101,10 @@ public class RequestService {
 
     @Transactional
     public void addRequest(Long translationId, List<MultipartFile> files) throws IOException {
-        Translation translation = translationRepository.findById(translationId).orElse(null);
-        Client client = clientRepository.findById(1L).orElse(null);
+        Translation translation = translationRepository.findById(translationId)
+                .orElseThrow(() -> new GeneralException(Code.DATA_NOT_FOUND));
+        Client client = clientRepository.findById(1L)
+                .orElseThrow(() -> new GeneralException(Code.DATA_NOT_FOUND));
         List<String> requestPdfs = new ArrayList<>();
         for (MultipartFile file : files) {
             String fileName = "request/request/" + UUID.randomUUID() + "-" + file.getOriginalFilename();
@@ -124,8 +126,9 @@ public class RequestService {
 
     @Transactional
     public void acceptRequest(Long requestId) {
-        Optional<Request> request = requestRepository.findById(requestId);
-        request.ifPresent(Request::accept);
+        Request request = requestRepository.findById(requestId)
+                .orElseThrow(() -> new GeneralException(Code.DATA_NOT_FOUND));
+        request.accept();
     }
 
     @Transactional
@@ -144,6 +147,9 @@ public class RequestService {
             amazonS3.putObject(bucketName, fileName, file.getInputStream(), metadata);
             responsePdfs.add(amazonS3.getUrl(bucketName, fileName).toString());
         }
-        request.uploadResponsePdfs(responsePdfs);
+
+        Request request = requestRepository.findById(requestId)
+                .orElseThrow(() -> new GeneralException(Code.DATA_NOT_FOUND));
+        request.complete(responsePdfs);
     }
 }

@@ -1,5 +1,7 @@
 package com.makive.moumi.service;
 
+import com.makive.moumi.exception.Code;
+import com.makive.moumi.exception.GeneralException;
 import com.makive.moumi.model.domain.Translation;
 import com.makive.moumi.model.dto.TranslationDTO;
 import com.makive.moumi.model.dto.TranslatorDTO;
@@ -55,8 +57,8 @@ public class TranslationService {
     }
 
     public TranslationResponse getTranslation(Long translationId) {
-        Translation translation = translationRepository.findById(translationId).orElse(null);
-        assert translation != null;
+        Translation translation = translationRepository.findById(translationId)
+                .orElseThrow(() -> new GeneralException(Code.DATA_NOT_FOUND));
         TranslationDTO translationDTO = TranslationDTO.fromTranslation(translation);
         TranslatorDTO translatorDTO = TranslatorDTO.fromTranslator(translation.getTranslator());
 
