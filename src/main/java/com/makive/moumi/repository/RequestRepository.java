@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Long> {
-    Slice<Request> findAllByClientId(@Param("clientId") Long clientId, Pageable pageable);
+    Slice<Request> findAll(Specification<Request> spec, Pageable pageable);
 }

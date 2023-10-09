@@ -26,7 +26,7 @@ public class DorandoranService {
 
     public DorandoransResponse getDorandorans(DorandoranRequest dorandoranRequest, Pageable pageable) {
         List<String> category = dorandoranRequest.getCategory();
-        Specification<Dorandoran> spec = DorandoranSpecifications.findAllByAllCategoryNames(category);
+        Specification<Dorandoran> spec = DorandoranSpecifications.findAllByCategory(category);
 
         Slice<Dorandoran> dorandoranSlice = dorandoranRepository.findAll(spec, pageable);
         List<DorandoranDTO> dorandoranDTOList = dorandoranSlice.getContent().stream()

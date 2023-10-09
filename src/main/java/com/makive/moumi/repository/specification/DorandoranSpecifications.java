@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DorandoranSpecifications {
-    public static Specification<Dorandoran> findAllByAllCategoryNames(List<String> category) {
+    public static Specification<Dorandoran> findAllByCategory(List<String> category) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 

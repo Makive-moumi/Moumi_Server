@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TranslationSpecifications {
-    public static Specification<Translation> findAllByAllCategoryNamesAndPriceRange(List<String> category, Integer minPrice, Integer maxPrice) {
+    public static Specification<Translation> findAllByCategoryAndPriceRange(List<String> category, Integer minPrice, Integer maxPrice) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 

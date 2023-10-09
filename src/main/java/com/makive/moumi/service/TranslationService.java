@@ -29,7 +29,7 @@ public class TranslationService {
         List<String> category = translationRequest.getCategory();
         int minPrice = translationRequest.getMinPrice();
         int maxPrice = translationRequest.getMaxPrice();
-        Specification<Translation> spec = TranslationSpecifications.findAllByAllCategoryNamesAndPriceRange(category, minPrice, maxPrice);
+        Specification<Translation> spec = TranslationSpecifications.findAllByCategoryAndPriceRange(category, minPrice, maxPrice);
 
         Slice<Translation> translationSlice = translationRepository.findAll(spec, pageable);
         List<TranslationDTO> translationDTOList = translationSlice.getContent().stream()
@@ -47,7 +47,7 @@ public class TranslationService {
         List<String> category = translationRequest.getCategory();
         int minPrice = translationRequest.getMinPrice();
         int maxPrice = translationRequest.getMaxPrice();
-        Specification<Translation> spec = TranslationSpecifications.findAllByAllCategoryNamesAndPriceRange(category, minPrice, maxPrice);
+        Specification<Translation> spec = TranslationSpecifications.findAllByCategoryAndPriceRange(category, minPrice, maxPrice);
 
         return TranslationsCountResponse.builder()
                 .count(translationRepository.count(spec))

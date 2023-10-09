@@ -54,6 +54,7 @@ public class RequestService {
     // TODO: 카테고리 및 리뷰 작성 여부로 조회하기
     public RequestsResponse getRequests(RequestRequest requestRequest, Pageable pageable) {
         Slice<Request> requestSlice = requestRepository.findAllByClientId(1L, pageable);
+        Slice<Request> requestSlice = requestRepository.findAll(spec, pageable);
         List<RequestDTO> requestDTOList = requestSlice.getContent().stream()
                 .map(RequestDTO::fromRequest)
                 .collect(Collectors.toList());
