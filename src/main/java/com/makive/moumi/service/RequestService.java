@@ -2,6 +2,8 @@ package com.makive.moumi.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.makive.moumi.exception.Code;
+import com.makive.moumi.exception.GeneralException;
 import com.makive.moumi.model.domain.Client;
 import com.makive.moumi.model.domain.Request;
 import com.makive.moumi.model.domain.Review;
@@ -15,10 +17,12 @@ import com.makive.moumi.model.dto.response.RequestsResponse;
 import com.makive.moumi.repository.ClientRepository;
 import com.makive.moumi.repository.RequestRepository;
 import com.makive.moumi.repository.TranslationRepository;
+import com.makive.moumi.repository.specification.RequestSpecifications;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +30,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -51,9 +54,11 @@ public class RequestService {
         return Double.parseDouble(String.format("%.1f", sum / reviewRatings.size()));
     }
 
-    // TODO: 카테고리 및 리뷰 작성 여부로 조회하기
     public RequestsResponse getRequests(RequestRequest requestRequest, Pageable pageable) {
-        Slice<Request> requestSlice = requestRepository.findAllByClientId(1L, pageable);
+        List<String> category = requestRequest.getCategory();
+        boolean hasReview = requestRequest.isHasReview();
+        Specification<Request> spec = RequestSpecifications.findAllByClientIdAndCategory(1L, category, hasReview);
+
         Slice<Request> requestSlice = requestRepository.findAll(spec, pageable);
         List<RequestDTO> requestDTOList = requestSlice.getContent().stream()
                 .map(RequestDTO::fromRequest)
@@ -111,7 +116,6 @@ public class RequestService {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(file.getSize());
             metadata.setContentType(file.getContentType());
-
             amazonS3.putObject(bucketName, fileName, file.getInputStream(), metadata);
             requestPdfs.add(amazonS3.getUrl(bucketName, fileName).toString());
         }
@@ -133,17 +137,12 @@ public class RequestService {
 
     @Transactional
     public void completeRequest(Long requestId, List<MultipartFile> files) throws IOException {
-        Request request = requestRepository.findById(requestId).orElse(null);
-        assert request != null;
-        request.complete();
-
         List<String> responsePdfs = new ArrayList<>();
         for (MultipartFile file : files) {
             String fileName = "request/response/" + UUID.randomUUID() + "-" + file.getOriginalFilename();
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(file.getSize());
             metadata.setContentType(file.getContentType());
-
             amazonS3.putObject(bucketName, fileName, file.getInputStream(), metadata);
             responsePdfs.add(amazonS3.getUrl(bucketName, fileName).toString());
         }

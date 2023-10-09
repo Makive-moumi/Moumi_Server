@@ -58,11 +58,8 @@ public class Request {
         this.status = RequestStatus.진행중;
     }
 
-    public void complete() {
+    public void complete(List<String> responsePdfs) {
         this.status = RequestStatus.완료;
-    }
-
-    public void uploadResponsePdfs(List<String> responsePdfs) {
         this.responsePdfs = responsePdfs;
     }
 }
