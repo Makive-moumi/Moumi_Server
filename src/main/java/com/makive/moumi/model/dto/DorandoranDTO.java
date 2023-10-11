@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
@@ -16,6 +17,7 @@ import java.util.List;
 public class DorandoranDTO {
     private Long id;
     private String title;
+    private List<String> category;
     private List<String> images;
     private LocalDate uploadDate;
 
@@ -23,6 +25,9 @@ public class DorandoranDTO {
         return DorandoranDTO.builder()
                 .id(dorandoran.getId())
                 .title(dorandoran.getTitle())
+                .category(dorandoran.getDorandoranCategories().stream()
+                        .map(dorandoranCategory -> dorandoranCategory.getCategory().getName())
+                        .collect(Collectors.toList()))
                 .images(dorandoran.getImages())
                 .uploadDate(dorandoran.getUploadDate())
                 .build();
