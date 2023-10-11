@@ -6,7 +6,7 @@ import java.util.List;
 
 @Getter
 public class TranslationRequest {
-    private int minPrice;
-    private int maxPrice;
+    private Integer minPrice;
+    private Integer maxPrice;
     private List<String> category;
 }

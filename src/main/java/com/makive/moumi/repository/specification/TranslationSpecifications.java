@@ -15,7 +15,7 @@ public class TranslationSpecifications {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (!category.isEmpty()) {
+            if (category != null && !category.isEmpty()) {
                 Subquery<Long> subquery = query.subquery(Long.class);
                 Root<TranslationCategory> subqueryTranslationCategory = subquery.from(TranslationCategory.class);
                 subquery.select(subqueryTranslationCategory.get("translation").get("id"));
@@ -26,8 +26,13 @@ public class TranslationSpecifications {
                 predicates.add(root.get("id").in(subquery));
             }
 
-            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice));
-            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
+            if (minPrice != null) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice));
+            }
+
+            if (maxPrice != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
+            }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };

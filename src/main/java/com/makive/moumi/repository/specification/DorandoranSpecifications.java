@@ -15,7 +15,7 @@ public class DorandoranSpecifications {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (!category.isEmpty()) {
+            if (category != null && !category.isEmpty()) {
                 Subquery<Long> subquery = query.subquery(Long.class);
                 Root<DorandoranCategory> subqueryDorandoranCategory = subquery.from(DorandoranCategory.class);
                 subquery.select(subqueryDorandoranCategory.get("translation").get("id"));
