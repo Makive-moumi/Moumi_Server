@@ -20,8 +20,8 @@ public class DorandoranController {
         return DataResponse.of(dorandoranService.getDorandorans(dorandoranRequest, pageable));
     }
 
-    @GetMapping("/{dorandoran_id}")
-    public DataResponse getDorandoran(@PathVariable("dorandoran_id") Long dorandoranId) {
+    @GetMapping("/{dorandoranId}")
+    public DataResponse getDorandoran(@PathVariable Long dorandoranId) {
         return DataResponse.of(dorandoranService.getDorandoran(dorandoranId));
     }
 }

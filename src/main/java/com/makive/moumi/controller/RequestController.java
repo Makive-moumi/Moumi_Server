@@ -26,30 +26,30 @@ public class RequestController {
         return DataResponse.of(requestService.getRequests(requestRequest, pageable));
     }
 
-    @GetMapping("/requests/{request_id}/client")
-    public DataResponse getRequestClient(@PathVariable("request_id") Long requestId) {
+    @GetMapping("/requests/{requestId}/client")
+    public DataResponse getRequestClient(@PathVariable Long requestId) {
         return DataResponse.of(requestService.getRequestClient(requestId));
     }
 
-    @GetMapping("/requests/{request_id}/translator")
-    public DataResponse getRequestTranslator(@PathVariable("request_id") Long requestId) {
+    @GetMapping("/requests/{requestId}/translator")
+    public DataResponse getRequestTranslator(@PathVariable Long requestId) {
         return DataResponse.of(requestService.getRequestTranslator(requestId));
     }
 
-    @PostMapping("/translations/{translation_id}/request")
-    public Response addRequest(@PathVariable("translation_id") Long translationId, @RequestParam("file") List<MultipartFile> files) throws IOException {
+    @PostMapping("/translations/{translationId}/request")
+    public Response addRequest(@PathVariable Long translationId, @RequestParam("file") List<MultipartFile> files) throws IOException {
         requestService.addRequest(translationId, files);
         return Response.of(true, Code.OK);
     }
 
-    @PatchMapping("/requests/{request_id}/accept")
-    public Response acceptRequest(@PathVariable("request_id") Long requestId) {
+    @PatchMapping("/requests/{requestId}/accept")
+    public Response acceptRequest(@PathVariable Long requestId) {
         requestService.acceptRequest(requestId);
         return Response.of(true, Code.OK);
     }
 
-    @PatchMapping("/requests/{request_id}/complete")
-    public Response completeRequest(@PathVariable("request_id") Long requestId, @RequestParam("file") List<MultipartFile> files) throws IOException {
+    @PatchMapping("/requests/{requestId}/complete")
+    public Response completeRequest(@PathVariable Long requestId, @RequestParam("file") List<MultipartFile> files) throws IOException {
         requestService.completeRequest(requestId, files);
         return Response.of(true, Code.OK);
     }
