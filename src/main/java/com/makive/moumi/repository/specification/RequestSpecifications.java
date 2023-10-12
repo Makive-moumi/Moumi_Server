@@ -1,6 +1,7 @@
 package com.makive.moumi.repository.specification;
 
 import com.makive.moumi.model.domain.Request;
+import com.makive.moumi.model.domain.Review;
 import com.makive.moumi.model.domain.TranslationCategory;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
@@ -17,7 +18,7 @@ public class RequestSpecifications {
 
             predicates.add(criteriaBuilder.equal(root.get("client").get("id"), clientId));
 
-            if (!category.isEmpty()) {
+            if (category != null && !category.isEmpty()) {
                 Subquery<Long> subquery = query.subquery(Long.class);
                 Root<TranslationCategory> subqueryTranslationCategory = subquery.from(TranslationCategory.class);
                 subquery.select(subqueryTranslationCategory.get("translation").get("id"));
@@ -29,9 +30,13 @@ public class RequestSpecifications {
             }
 
             if (hasReview) {
-                predicates.add(criteriaBuilder.isNotNull(root.get("review")));
+                predicates.add(criteriaBuilder.isNotEmpty(root.get("review")));
             } else {
-                predicates.add(criteriaBuilder.isNull(root.get("review")));
+                Subquery<Review> subquery = query.subquery(Review.class);
+                Root<Review> subqueryReview = subquery.from(Review.class);
+                subquery.select(subqueryReview);
+                subquery.where(criteriaBuilder.equal(subqueryReview.get("request"), root));
+                predicates.add(criteriaBuilder.not(criteriaBuilder.exists(subquery)));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
