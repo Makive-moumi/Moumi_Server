@@ -30,7 +30,7 @@ public class RequestSpecifications {
             }
 
             if (hasReview) {
-                predicates.add(criteriaBuilder.isNotEmpty(root.get("review")));
+                predicates.add(criteriaBuilder.isNotNull(root.get("review")));
             } else {
                 Subquery<Review> subquery = query.subquery(Review.class);
                 Root<Review> subqueryReview = subquery.from(Review.class);
