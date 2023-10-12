@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class DorandoranController {
     private final DorandoranService dorandoranService;
 
-    @GetMapping
+    @PostMapping
     public DataResponse getDorandorans(@RequestBody DorandoranRequest dorandoranRequest, @PageableDefault(sort = {"uploadDate"}, direction = Sort.Direction.DESC) Pageable pageable) {
         return DataResponse.of(dorandoranService.getDorandorans(dorandoranRequest, pageable));
     }

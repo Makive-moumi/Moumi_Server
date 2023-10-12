@@ -16,12 +16,12 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 public class TranslationController {
     private final TranslationService translationService;
 
-    @GetMapping()
+    @PostMapping()
     public DataResponse getTranslations(@RequestBody TranslationRequest translationRequest, @PageableDefault(sort = {"registerDate"}, direction = DESC) Pageable pageable) {
         return DataResponse.of(translationService.getTranslations(translationRequest, pageable));
     }
 
-    @GetMapping("/count")
+    @PostMapping("/count")
     public DataResponse countTranslations(@RequestBody TranslationRequest translationRequest) {
         return DataResponse.of(translationService.countTranslations(translationRequest));
     }

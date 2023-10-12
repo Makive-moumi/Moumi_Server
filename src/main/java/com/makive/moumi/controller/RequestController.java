@@ -21,7 +21,7 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 public class RequestController {
     private final RequestService requestService;
 
-    @GetMapping("/requests")
+    @PostMapping("/requests")
     public DataResponse getRequests(@RequestBody RequestRequest requestRequest, @PageableDefault(sort = {"requestDate"}, direction = DESC) Pageable pageable) {
         return DataResponse.of(requestService.getRequests(requestRequest, pageable));
     }
