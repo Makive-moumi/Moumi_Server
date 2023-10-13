@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -77,14 +78,15 @@ public class RequestService {
         Translation translation = request.getTranslation();
         Review review = request.getReview();
         List<Double> reviewRatings = translation.getRequests().stream()
-                .map(r -> r.getReview() != null ? r.getReview().getRating() : 0.0)
-                .toList();
+                .map(r -> r.getReview() != null ? r.getReview().getRating() : null)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
 
         return RequestClientResponse.builder()
                 .request(RequestDTO.fromRequest(request))
                 .reviewRating(calculateAverageRating(reviewRatings))
                 .reviewCount(reviewRatings.size())
-                .review(ReviewDTO.fromReview(review))
+                .review(review != null ? ReviewDTO.fromReview(review) : null)
                 .requestPdfs(request.getRequestPdfs())
                 .responsePdfs(request.getResponsePdfs())
                 .build();

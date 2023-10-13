@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Getter
@@ -17,25 +18,23 @@ public class TranslationDTO {
     private Long id;
     private String title;
     private int price;
-    private double rating;
-    private int count;
+    private double reviewRating;
+    private int reviewCount;
     private List<String> category;
     private String image;
 
     public static TranslationDTO fromTranslation(Translation translation) {
         List<Double> reviewRatings = translation.getRequests().stream()
-                .map(request ->  request.getReview() != null ? request.getReview().getRating() : 0.0)
+                .map(request -> request.getReview() != null ? request.getReview().getRating() : null)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
-
-        double averageRating = calculateAverageRating(reviewRatings);
-        int reviewCount = reviewRatings.size();
 
         return TranslationDTO.builder()
                 .id(translation.getId())
                 .title(translation.getTitle())
                 .price(translation.getPrice())
-                .rating(averageRating)
-                .count(reviewCount)
+                .reviewRating(calculateAverageRating(reviewRatings))
+                .reviewCount(reviewRatings.size())
                 .category(translation.getTranslationCategories().stream()
                         .map(translationCategory -> translationCategory.getCategory().getName())
                         .collect(Collectors.toList()))
