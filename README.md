@@ -57,12 +57,12 @@
 <a href="https://spring.io/projects/spring-boot" target="_blank" rel="noreferrer"> <img src="http://img.shields.io/badge/-spring_boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" alt="springboot" height="24"/> </a> <!-- SpringBoot -->
 <a href="https://www.java.com" target="_blank" rel="noreferrer"> <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white" alt="java" height="24"/> </a> <!-- Java -->  
   
-![시스템 구조도 설계](https://github.com/Makive-moumi/Moumi_RN/assets/76805879/ad3e1ff1-a808-49cf-b9e5-077e0f3fe212)
+![시스템 구조도 설계](https://github.com/Makive-moumi/Moumi_RN/assets/76805879/52591021-35f3-43e0-b77b-e3293a3288b7)
 
 ---
 
 ### 🥳 모우미와 함께 도란도란
-![번역신청](https://github.com/Makive-moumi/Moumi_RN/assets/76805879/546b3419-a682-447c-bfb3-051980df75f1)
-![도란도란](https://github.com/Makive-moumi/Moumi_RN/assets/76805879/a67ca26a-21e1-4cfa-b81f-5027be6a4669)
-![마이페이지](https://github.com/Makive-moumi/Moumi_RN/assets/76805879/32284fdc-c101-4951-9375-f7286822523a)
-![마이페이지2](https://github.com/Makive-moumi/Moumi_RN/assets/76805879/9a8f529b-92cc-411c-bc7f-b1ade9a8ccd1)
+![번역신청](https://github.com/Makive-moumi/Moumi_RN/assets/76805879/b467e5e4-919b-4001-9595-de07deda2a17)
+![도란도란](https://github.com/Makive-moumi/Moumi_RN/assets/76805879/9993ef00-9758-4422-aaf4-6e3a6cddf01d)
+![마이페이지](https://github.com/Makive-moumi/Moumi_RN/assets/76805879/4c4bb434-0069-45d7-8b64-80fb9af159e1)
+![마이페이지2](https://github.com/Makive-moumi/Moumi_RN/assets/76805879/299bca09-ab51-437d-8fdc-20688327d297)
